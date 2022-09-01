@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -8,29 +9,16 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>ru.job4j</groupId>
-  <artifactId>middle</artifactId>
+  <artifactId>job4j_car</artifactId>
   <packaging>jar</packaging>
   <version>2.0</version>
   <name>car</name>
-  <url>http://job4j.ru/</url>
 
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>17</java.version>
   </properties>
 
-  <profiles>
-    <profile>
-      <id>production</id>
-      <properties>
-        <db.url>jdbc:postgresql://127.0.0.1:5432/hibernate</db.url>
-        <db.username>postgres</db.username>
-        <db.password>password</db.password>
-        <db.driver>org.postgresql.Driver</db.driver>
-      </properties>
-    </profile>
-  </profiles>
+
 
   <dependencies>
     <dependency>
@@ -124,35 +112,9 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.7</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.1.2</version>
-        <dependencies>
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>9.0</version>
-          </dependency>
-        </dependencies>
         <executions>
           <execution>
             <id>validate</id>
@@ -171,30 +133,42 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <configuration>
-          <source>16</source>
-          <target>16</target>
-        </configuration>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <version>3.6.2</version>
         <configuration>
-          <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+          <changeLogFile>${basedir}/db/master.xml</changeLogFile>
+          <url>${db.url}</url>
+          <driver>${db.driver}</driver>
+          <username>${db.username}</username>
+          <password>${db.password}</password>
+          <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
         </configuration>
-        <version>3.2.0</version>
         <executions>
           <execution>
-            <id>attach-javadocs</id>
+            <phase>process-resources</phase>
             <goals>
-              <goal>jar</goal>
+              <goal>clearCheckSums</goal>
+              <goal>update</goal>
             </goals>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>production</id>
+      <properties>
+        <db.url>jdbc:postgresql://127.0.0.1:5432/car</db.url>
+        <db.username>postgres</db.username>
+        <db.password>password</db.password>
+        <db.driver>org.postgresql.Driver</db.driver>
+      </properties>
+    </profile>
+  </profiles>
 </project>
