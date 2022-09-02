@@ -1,11 +1,11 @@
-package model;
+package ru.job4j.model;
 
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Builder
+@Builder(builderMethodName = "of")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

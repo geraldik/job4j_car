@@ -1,4 +1,4 @@
-package model;
+package ru.job4j.model;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Builder
+@Builder(builderMethodName = "of")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
