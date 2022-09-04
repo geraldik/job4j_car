@@ -24,9 +24,9 @@ public class Driver {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "history_owner", joinColumns = {
-            @JoinColumn(name = "car_iddriver_id", nullable = false, updatable = false)},
+            @JoinColumn(name = "car_id", nullable = false, updatable = false)},
             inverseJoinColumns = {
                     @JoinColumn(name = "driver_id", nullable = false, updatable = false)})
-    private Set<Car> cars = new HashSet<>();
+    private Set<Brand> cars = new HashSet<>();
 
 }

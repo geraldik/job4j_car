@@ -25,8 +25,14 @@ public class AutoPost {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime created;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "auto_user_id")
-    private AutoPost post;
+    @Column(name = "photo")
+    private byte[] photo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
+
+    @OneToOne()
+    @JoinColumn(name = "car_id")
+    private Car car;
 }

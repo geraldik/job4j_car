@@ -6,13 +6,6 @@ CREATE TABLE IF NOT EXISTS driver
     password VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS auto_post
-(
-    id           SERIAL PRIMARY KEY,
-    text         TEXT NOT NULL,
-    created      TIMESTAMP,
-    auto_user_id INT REFERENCES driver (id)
-);
 CREATE TABLE IF NOT EXISTS engine
 (
     id          SERIAL PRIMARY KEY,
@@ -29,19 +22,34 @@ CREATE TABLE IF NOT EXISTS gearbox
 );
 CREATE TABLE IF NOT EXISTS car_body
 (
-    id        SERIAL PRIMARY KEY,
-    color     VARCHAR(64) NOT NULL,
-    body_type VARCHAR(20) NOT NULL,
-    doors_number INT NOT NULL
+    id           SERIAL PRIMARY KEY,
+    color        VARCHAR(64) NOT NULL,
+    body_type    VARCHAR(20) NOT NULL,
+    doors_number INT         NOT NULL
+);
+CREATE TABLE IF NOT EXISTS brand
+(
+    id           SERIAL PRIMARY KEY,
+    name        VARCHAR(50) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS car
 (
     id           SERIAL PRIMARY KEY,
-    name         VARCHAR(50) NOT NULL,
+    model         VARCHAR(50) NOT NULL,
     manufactured TIMESTAMP   NOT NULL,
     engine_id    INT         NOT NULL UNIQUE REFERENCES engine (id),
     gearbox_id   INT         NOT NULL REFERENCES gearbox (id),
-    car_body     INT         NOT NULL REFERENCES car_body (id)
+    car_body_id     INT         NOT NULL REFERENCES car_body (id),
+    brand_id INT NOT NULL REFERENCES brand(id)
+);
+CREATE TABLE IF NOT EXISTS auto_post
+(
+    id        SERIAL PRIMARY KEY,
+    text      TEXT NOT NULL,
+    created   TIMESTAMP,
+    photo     BYTEA,
+    driver_id INT NOT NULL REFERENCES driver (id),
+    car_id INT NOT NULL REFERENCES car(id)
 );
 CREATE TABLE IF NOT EXISTS history_owner
 (

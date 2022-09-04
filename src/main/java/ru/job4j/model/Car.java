@@ -20,8 +20,8 @@ public class Car {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
+    @Column(name = "model", nullable = false, length = 50)
+    private String model;
 
     @Column(name = "manufactured", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -34,4 +34,7 @@ public class Car {
                     @JoinColumn(name = "car_id", nullable = false, updatable = false)})
     private Set<Driver> drivers = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 }
