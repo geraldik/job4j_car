@@ -17,6 +17,7 @@
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
 
         <mapping class="ru.job4j.model.Brand" />
+        <mapping class="ru.job4j.model.Car" />
         <mapping class="ru.job4j.model.AutoPost" />
         <mapping class="ru.job4j.model.CarBody" />
         <mapping class="ru.job4j.model.Driver" />

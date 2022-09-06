@@ -22,7 +22,6 @@ public class AutoPost {
     private String text;
 
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime created;
 
     @Column(name = "photo")

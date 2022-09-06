@@ -27,6 +27,6 @@ public class CarBody {
     private int doorsNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "body_type")
+    @Column(name = "body_type", insertable = false, updatable = false)
     private CarBodyType carBodyType;
 }

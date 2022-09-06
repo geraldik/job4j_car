@@ -24,7 +24,6 @@ public class Car {
     private String model;
 
     @Column(name = "manufactured", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime manufactured;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

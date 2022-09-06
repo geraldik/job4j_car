@@ -28,7 +28,6 @@ public class Engine {
     private int horsePower;
 
     @Column(name = "created", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime created;
 
 }

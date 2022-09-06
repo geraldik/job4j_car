@@ -48,4 +48,8 @@ public class PostRepository implements TransactionService {
                 sf
         );
     }
+
+    public void add(AutoPost post) {
+        this.tx(session -> session.save(post), sf);
+    }
 }
