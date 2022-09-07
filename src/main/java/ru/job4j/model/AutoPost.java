@@ -12,13 +12,16 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "auto_post")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class AutoPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @EqualsAndHashCode.Include
     private int id;
 
     @Column(name = "text", nullable = false)
+    @EqualsAndHashCode.Include
     private String text;
 
     @Column(name = "created")

@@ -10,11 +10,10 @@ import java.util.List;
 @Repository
 public class PostRepository implements TransactionService {
 
+    private static final String QUERY_FIND_ALL_FOR_LAST_DAY = "select a from AutoPost a "
+            + "where date(a.created) = current_date";
     private static final String QUERY_FIND_ALL_WITH_PHOTO = "select a from AutoPost a "
             + "where a.photo is not null";
-
-    private static final String QUERY_FIND_ALL_FOR_LAST_DAY = "select a from AutoPost a "
-            + "where a.created = current_timestamp()";
 
     private static final String QUERY_FIND_SPECIFIC_BRAND = "select a from AutoPost a join a.car car "
             + "where car.brand = :brand";
