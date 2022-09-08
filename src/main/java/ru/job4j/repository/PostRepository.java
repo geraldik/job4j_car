@@ -11,12 +11,12 @@ import java.util.List;
 public class PostRepository implements TransactionService {
 
     private static final String QUERY_FIND_ALL_FOR_LAST_DAY = "select a from AutoPost a "
-            + "where date(a.created) = current_date";
+            + "where a.created >= current_date";
     private static final String QUERY_FIND_ALL_WITH_PHOTO = "select a from AutoPost a "
             + "where a.photo is not null";
 
     private static final String QUERY_FIND_SPECIFIC_BRAND = "select a from AutoPost a join a.car car "
-            + "where car.brand = :brand";
+            + "where car.brand.name = :brandName";
     private final SessionFactory sf;
 
     public PostRepository(SessionFactory sf) {
@@ -42,7 +42,7 @@ public class PostRepository implements TransactionService {
     public List<AutoPost> findSpecificBrand(String brand) {
         return this.tx(
                 session -> session.createQuery(QUERY_FIND_SPECIFIC_BRAND, AutoPost.class)
-                        .setParameter("brand", brand)
+                        .setParameter("brandName", brand)
                         .list(),
                 sf
         );
