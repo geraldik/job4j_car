@@ -9,16 +9,15 @@ CREATE TABLE IF NOT EXISTS driver
 CREATE TABLE IF NOT EXISTS engine
 (
     id          SERIAL PRIMARY KEY,
-    number      VARCHAR(14),
     volume      NUMERIC(2) NOT NULL,
     horse_power INT        NOT NULL,
-    created     TIMESTAMP  NOT NULL
+    is_diesel   BOOLEAN NOT NULL
 );
 CREATE TABLE IF NOT EXISTS gearbox
 (
-    id           SERIAL PRIMARY KEY,
-    automatic    BOOLEAN,
-    speed_number INT NOT NULL
+    id              SERIAL  PRIMARY KEY,
+    is_automatic    BOOLEAN NOT NULL,
+    speed_number    INT     NOT NULL
 );
 CREATE TABLE IF NOT EXISTS car_body
 (
@@ -34,12 +33,12 @@ CREATE TABLE IF NOT EXISTS brand
 );
 CREATE TABLE IF NOT EXISTS car
 (
-    id           SERIAL PRIMARY KEY,
-    model         VARCHAR(50) NOT NULL,
-    manufactured TIMESTAMP   NOT NULL,
-    engine_id    INT         NOT NULL UNIQUE REFERENCES engine (id),
-    gearbox_id   INT         NOT NULL REFERENCES gearbox (id),
-    car_body_id     INT         NOT NULL REFERENCES car_body (id),
+    id           SERIAL       PRIMARY KEY,
+    model        VARCHAR(50)  NOT NULL,
+    manufacture_year INT      NOT NULL,
+    engine_id    INT          NOT NULL UNIQUE REFERENCES engine (id),
+    gearbox_id   INT          NOT NULL REFERENCES gearbox (id),
+    car_body_id  INT          NOT NULL REFERENCES car_body (id),
     brand_id INT NOT NULL REFERENCES brand(id)
 );
 CREATE TABLE IF NOT EXISTS auto_post

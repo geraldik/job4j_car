@@ -22,6 +22,12 @@ public class Driver {
     @Column(name = "name", nullable = false, length = 30)
     private String name;
 
+    @Column(name = "login", nullable = false, length = 30)
+    private String login;
+
+    @Column(name = "password", nullable = false, length = 30)
+    private String password;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "history_owner", joinColumns = {
             @JoinColumn(name = "car_id", nullable = false, updatable = false)},

@@ -23,8 +23,8 @@ public class Car {
     @Column(name = "model", nullable = false, length = 50)
     private String model;
 
-    @Column(name = "manufactured", nullable = false)
-    private LocalDateTime manufactured;
+    @Column(name = "manufacture_year", nullable = false)
+    private int manufactureYear;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "history_owner", joinColumns = {
@@ -34,6 +34,19 @@ public class Car {
     private Set<Driver> drivers = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "engine_id")
+    private Engine engine;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "gearbox_id")
+    private Gearbox gearbox;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "car_bady_id")
+    private CarBody carBody;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "brand_id")
     private Brand brand;
+
 }

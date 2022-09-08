@@ -6,10 +6,9 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import ru.job4j.model.AutoPost;
-import ru.job4j.model.Brand;
-import ru.job4j.model.Car;
+import ru.job4j.model.*;
 import ru.job4j.utility.TransactionService;
 
 import java.time.LocalDateTime;
@@ -24,20 +23,67 @@ class PostRepositoryTest implements TransactionService {
 
     private final SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
 
+    @Before
+    public  void fillTables() {
+        Session session = sf.openSession();
+        Transaction ts = session.beginTransaction();
+        Driver driver = Driver.of()
+                .name("name")
+                .login("login")
+                .password("password")
+                .build();
+        Brand brand = Brand.of()
+                .name("Lada")
+                .build();
+        CarBody carBody = CarBody.of()
+                .color("black")
+                .doorsNumber(4)
+                .carBodyType(CarBodyType.SEDAN)
+                .build();
+        Engine engine = Engine.of()
+                .volume(1.8)
+                .horsePower(110)
+                .diesel(false)
+                .build();
+        Gearbox gearbox = Gearbox.of()
+                .automatic(true)
+                .speedNumber(4)
+                .build();
+        Car car = Car.of()
+                .brand(brand)
+                .manufactureYear(2022)
+                .model("Vesta")
+                .engine(engine)
+                .gearbox(gearbox)
+                .carBody(carBody)
+                .build();
+        session.persist(driver);
+        session.persist(car);
+        ts.commit();
+        session.close();
+    }
+
     @Test
     public void whenAddThreeAndFindByLastDayWhenGetTwo() {
         PostRepository repository = new PostRepository(sf);
+
         AutoPost post1 = AutoPost.of()
                 .text("post 1")
                 .created(LocalDateTime.now())
+                .driver(new Driver())
+                .car(new Car())
                 .build();
         AutoPost post2 = AutoPost.of()
                 .text("post 2")
                 .created(LocalDateTime.now())
+                .driver(new Driver())
+                .car(new Car())
                 .build();
         AutoPost post3 = AutoPost.of()
                 .text("post 2")
                 .created(LocalDateTime.now().minusDays(1))
+                .driver(new Driver())
+                .car(new Car())
                 .build();
         repository.add(post1);
         repository.add(post2);
@@ -79,12 +125,12 @@ class PostRepositoryTest implements TransactionService {
                 .build();
         Car car1 = Car.of()
                 .brand(brand1)
-                .manufactured(LocalDateTime.now())
+                .manufactureYear(2022)
                 .model("X5")
                 .build();
         Car car2 = Car.of()
                 .brand(brand2)
-                .manufactured(LocalDateTime.now())
+                .manufactureYear(2022)
                 .model("Vesta")
                 .build();
         session.persist(car1);

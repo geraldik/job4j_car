@@ -17,7 +17,7 @@ public class Gearbox {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "automatic")
+    @Column(name = "is_automatic")
     private Boolean automatic;
 
     @Column(name = "speed_number", nullable = false)
