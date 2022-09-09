@@ -12,6 +12,9 @@ public class PostRepository implements TransactionService {
 
     private static final String QUERY_FIND_ALL_FOR_LAST_DAY = "select a from AutoPost a "
             + "where a.created >= current_date";
+
+    private static final String QUERY_FIND_ALL = "from AutoPost a ";
+
     private static final String QUERY_FIND_ALL_WITH_PHOTO = "select a from AutoPost a "
             + "where a.photo is not null";
 
@@ -26,6 +29,14 @@ public class PostRepository implements TransactionService {
     public List<AutoPost> findAllForLastDay() {
         return this.tx(
                 session -> session.createQuery(QUERY_FIND_ALL_FOR_LAST_DAY, AutoPost.class)
+                        .list(),
+                sf
+        );
+    }
+
+    public List<AutoPost> findAll() {
+        return this.tx(
+                session -> session.createQuery(QUERY_FIND_ALL, AutoPost.class)
                         .list(),
                 sf
         );
