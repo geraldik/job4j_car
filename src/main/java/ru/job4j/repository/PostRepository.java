@@ -20,6 +20,7 @@ public class PostRepository implements TransactionService {
 
     private static final String QUERY_FIND_SPECIFIC_BRAND = "select a from AutoPost a join a.car car "
             + "where car.brand.name = :brandName";
+    private static final String QUERY_FIND_BY_ID = "from AutoPost a where id = :id";
     private final SessionFactory sf;
 
     public PostRepository(SessionFactory sf) {
@@ -61,5 +62,14 @@ public class PostRepository implements TransactionService {
 
     public void add(AutoPost post) {
         this.tx(session -> session.save(post), sf);
+    }
+
+    public AutoPost findById(int id) {
+        return this.tx(
+                session -> session.createQuery(QUERY_FIND_BY_ID, AutoPost.class)
+                        .setParameter("id", id)
+                        .getSingleResult(),
+                sf
+        );
     }
 }

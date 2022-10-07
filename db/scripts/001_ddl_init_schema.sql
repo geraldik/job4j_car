@@ -48,7 +48,8 @@ CREATE TABLE IF NOT EXISTS auto_post
     created   TIMESTAMP,
     photo     BYTEA,
     driver_id INT  NOT NULL REFERENCES driver (id),
-    car_id    INT  NOT NULL REFERENCES car (id)
+    car_id    INT  NOT NULL REFERENCES car (id),
+    sold BOOLEAN
 );
 CREATE TABLE IF NOT EXISTS history_owner
 (

@@ -30,6 +30,9 @@ public class AutoPost {
     @Column(name = "photo")
     private byte[] photo;
 
+    @Column(name = "sold")
+    private  boolean sold;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")
     private Driver driver;
